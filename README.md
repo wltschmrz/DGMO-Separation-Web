@@ -5,7 +5,7 @@ This repository hosts the project page for **DGMO: Training-Free Audio Source Se
 
 📄 **The arXiv link of the paper:** [https:~~](https://DGMO_paper.)
 
-\bash
+```bash
 DGMO-Separation-Web/
 │── index.html         # 메인 페이지 (프로젝트 설명, 논문, 데모 링크 포함)
 │── assets/            # 이미지, CSS, JS 등 정적 파일 저장
@@ -20,3 +20,4 @@ DGMO-Separation-Web/
 │── README.md          # 레포 설명 파일 (간단한 설명 포함)
 │── .gitignore         # 불필요한 파일 제외 (예: .DS_Store, node_modules 등)
 │── CNAME              # (선택 사항) 커스텀 도메인 사용 시 필요
+```
