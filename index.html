@@ -2,8 +2,9 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
+  <meta name="generator" content="Hugo 0.66.0" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Separate Anything You Describe</title>
+  <title>DGMO: Training-Free Audio Source Separation through Diffusion-Guided Mask Optimization</title>
   <link rel="shortcut icon" href="favicon.png" type="image/x-icon">
   
   <!-- Bootstrap & Fonts -->
@@ -41,9 +42,9 @@
       <article>
         <h1 class="text-center" style="font-size:50px;">Separate Anything You Describe</h1>
         <p class="text-center" style="color: #0056b3;">
-          <a href="https://liuxubo717.github.io/">Xubo Liu</a>,
-          <a href="https://qiuqiangkong.github.io/">Qiuqiang Kong</a>,
-          <a href="https://cliffzhao.github.io">Yan Zhao</a>
+          <a href="https://liuxubo717.github.io/">Geonyoung Lee</a>,
+          <a href="https://qiuqiangkong.github.io/">Geonhee Han</a>,
+          <a href="https://cliffzhao.github.io">Paul Hongsuck Seo</a>
         </p>
         
         <div class="text-center my-3">
@@ -54,7 +55,9 @@
         <section>
           <h1 class="text-center">Abstract</h1>
           <p class="text-justify">
-            Language-queried audio source separation (LASS) is a new paradigm for computational auditory scene analysis (CASA)...
+            Language-Queried Audio Source Separation (LASS) enables open-vocabulary sound separation by conditioning on natural language descriptions. While existing LASS methods rely on task-specific training, we explore whether pretrained diffusion models, originally designed for audio generation, can inherently perform separation without additional training.
+In this study, we introduce a training-free framework that leverages generative priors for zero-shot LASS. We examine naïve adaptations of diffusion models to LASS and identify key limitations arising from modality-specific challenges. To address these issues, we propose Diffusion-Guided Mask Optimization (DGMO), a test-time optimization framework that refines spectrogram masks for precise, input-aligned separation.
+Our approach demonstrates that pretrained diffusion models can be effectively repurposed for source separation, achieving competitive performance without task-specific supervision. This work expands the application of diffusion models beyond generation, establishing a new paradigm for zero-shot audio separation.
           </p>
         </section>
         
