@@ -2,163 +2,243 @@
 <html lang="en">
 
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>DGMO: Training‑Free Audio Source Separation through Diffusion‑Guided Mask Optimization</title>
-
-  <!--  ▸▸  FRAMEWORK & ICONS  ◂◂  -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" />
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" crossorigin="anonymous" />
+  <meta charset="utf-8">
+  <meta name="generator" content="Hugo 0.66.0" />
+  <!-- <meta name="viewport" content="width=device-width, initial-scale=1"> -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- 引入Bootstrap CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
   <link rel="shortcut icon" href="favicon.png" type="image/x-icon" />
 
-  <!--  ▸▸  FONTS  ◂◂  -->
-  <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,600&display=swap" rel="stylesheet" />
+  <!-- 引入jQuery -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-  <!--  ▸▸  CUSTOM STYLES  ◂◂  -->
-  <link rel="stylesheet" href="../css/normalize.css" />
-  <link rel="stylesheet" href="../css/skeleton.css" />
-  <link rel="stylesheet" href="../css/custom.css" />
+  <!-- 引入Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
 
-  <!--  ▸▸  PAGE‑SPECIFIC CSS  ◂◂  -->
+  <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,600" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/github.min.css">
+  <link rel="stylesheet" href="../css/normalize.css">
+  <link rel="stylesheet" href="../css/skeleton.css">
+  <link rel="stylesheet" href="../css/custom.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <link rel="alternate" href="index.xml" type="application/rss+xml" title="Speech Research">
+  <link rel="shortcut icon" href="favicon.png" type="image/x-icon" />
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fork-awesome@1.2.0/css/fork-awesome.min.css" integrity="sha256-XoaMnoYC5TH6/+ihMEnospgm0J1PM/nioxbOUdnM8HY=" crossorigin="anonymous">
   <style>
     body {
-      font-family: Georgian, serif;
-      font-size: 20px;
-    }
+      font-size: 20px; /* 设置默认字体大小 */
 
-    h1.title {
-      font-size: 2.8rem;
-      font-weight: 700;
-      margin-bottom: 0.25rem;
     }
+    h1{ font-size:30px; 
+      color:black"
 
-    .conf-tag {
-      font-size: 1.5rem;
-      margin-bottom: 1rem;
     }
-
-    .author-block {
-      margin: 0 0.25rem;
+    thead{
+      border-top: 1px solid #ccc; 
     }
-
-    .author-block sup {
-      font-size: 0.6em;
+    .table td{
+      border: none
     }
+    .no-border {
+    border: none;
+  }
 
-    .logo-bar img {
-      height: 54px;
-      margin: 0 40px 10px 0;
-    }
+  th{
+    font-weight: lighter;
+  }
 
-    /*  Table helpers  */
     .table-container {
       overflow-x: auto;
+      /* width:120%; */
       width: 100%;
+      /* margin: 20px; */
     }
 
-    thead {
-      border-top: 1px solid #ccc;
+    .table-container2 {
+    table-layout: fixed;
+    word-break: break-word;
+    width: 90%; /* 适当调整宽度 */
+    margin: 0 auto; /* 居中对齐 */
     }
 
-    .table td,
-    .table th {
-      border: none !important;
-      vertical-align: middle;
+    .divider {
+    border-top: 2px solid #ccc; /* 灰色边框 */
+    margin: 20px 0; /* 适当调整上下边距 */
+  }
+
+    .audio-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border: none
     }
 
-    td,
-    p {
-      text-align: justify;
-      color: #000;
+    td{
+      text-align: justify; 
+      color:black;
+      font-family: georgian;
     }
 
+    font{ text-align: justify; 
+      color:black;
+      font-family: georgian;
+
+    }
+
+      video {
+      width: 640px; /* 设置视频宽度 */
+      height: 360px; /* 设置视频高度 */
+    }
+    @media(min-width:1200px){
+      .table-container {
+      overflow-x: auto;
+      width:100%;
+      margin: 0 auto;
+
+    }
+    }
     @media (max-width: 600px) {
+      /* 在手机屏幕上应用以下样式 */
       body {
-        font-size: 14px;
+        font-size: 14px; /* 缩小字体大小 */
       }
-
-      h1.title {
-        font-size: 1.75rem;
+      h1 {
+        font-size: 22px; /* 缩小标题字体大小 */
       }
-
-      .conf-tag {
-        font-size: 1.1rem;
+      h2 {
+        font-size: 18px; /* 缩小标题字体大小 */
       }
-
-      .logo-bar img {
-        height: 40px;
-        margin: 0 15px 10px 0;
+      nav ul li {
+        display: block; /* 列表项显示为块级元素，方便手机点击 */
+      }
+      .video-container {
+        padding-bottom: 75%; /* 4:3宽高比，调整此值适配其他比例的视频 */
+      }
+      video {
+      width: 400px; /* 设置视频宽度 */
+      /* height: 360px; 设置视频高度 */
       }
     }
   </style>
+  <title >DGMO: Training-Free Audio Source Separation through Diffusion-Guided Mask Optimization</title>
 </head>
 
-<body>
-  <div class="container py-5">
-    <!--  ▸▸  HERO SECTION  ◂◂  -->
-    <section class="text-center mb-5" id="hero">
-      <h1 class="title">DGMO: Training‑Free Audio Source Separation through Diffusion‑Guided Mask Optimization</h1>
-      <div class="conf-tag d-flex justify-content-center align-items-center gap-2">
-        <img src="static/images/interspeech2025.svg" alt="Interspeech Logo" style="height:62px;vertical-align:middle;margin-right:10px" />
-        <b>Interspeech 2025</b>
-      </div>
-      <div class="is-size-5 publication-authors mb-1">
-        <span class="author-block">Geonyoung Lee<sup>1</sup>*</span>
-        <span class="author-block">Geonhee Han<sup>1</sup>*</span>
-        <span class="author-block"><a href="https://phseo.github.io">Paul Hongsuck Seo</a><sup>1</sup></span>
-      </div>
-      <div class="is-size-6 publication-authors mb-3">
-        <span class="author-block"><sup>1</sup>Korea University</span>
-        <span class="eql-cntrb"><small><br>* Equal contribution</small></span>
-      </div>
-      <div class="logo-bar d-flex justify-content-center align-items-center flex-wrap mb-4">
-        <a href="https://www.korea.edu/sites/en/index.do" target="_blank"><img src="static/images/ku-logo.png" alt="Korea University" /></a>
-        <a href="https://miil.korea.ac.kr/" target="_blank"><img src="static/images/miil.png" alt="MIIL" /></a>
-      </div>
+<body rightmargin="150" leftmargin="150" topmargin="100" bottommargin="100" line-height:160%>
+  <!-- <font size="5"> -->
 
-      <!--  ▸▸  LINKS  ◂◂  -->
-      <div class="d-flex justify-content-center gap-3 flex-wrap">
-        <a href="DGMO_arXiv.pdf" class="btn btn-dark btn-lg" target="_blank"><i class="fa fa-file-text mr-1"></i>Paper</a>
-        <a href="https://github.com/wltschmrz/DGMO" class="btn btn-dark btn-lg" target="_blank"><i class="fab fa-github mr-1"></i>Code</a>
-      </div>
-    </section>
+    <div class="container">
 
-    <!--  ▸▸  ABSTRACT  ◂◂  -->
-    <section id="abstract" class="mb-5">
-      <h2 class="mb-3 text-center">Abstract</h2>
-      <p>
-        Language‑Queried Audio Source Separation (LASS) enables open‑vocabulary sound separation by conditioning on natural
-        language descriptions. While existing LASS methods rely on task‑specific training, we explore whether pretrained
-        diffusion models, originally designed for audio generation, can inherently perform separation without additional
-        training. In this study, we introduce a training‑free framework that leverages generative priors for zero‑shot
-        LASS. We examine naïve adaptations of diffusion models to LASS and identify key limitations arising from
-        modality‑specific challenges. To address these issues, we propose <b>Diffusion‑Guided Mask Optimization (DGMO)</b>,
-        a test‑time optimization framework that refines spectrogram masks for precise, input‑aligned separation. Our
-        approach demonstrates that pretrained diffusion models can be effectively repurposed for source separation,
-        achieving competitive performance without task‑specific supervision. This work expands the application of
-        diffusion models beyond generation, establishing a new paradigm for zero‑shot audio separation.
-      </p>
-    </section>
+      <header role="banner">
 
-    <!--  ▸▸  DGMO FIGURE  ◂◂  -->
-    <section id="dgmo-figure" class="mb-5 text-center">
-      <h2 class="mb-4">Diffusion‑Guided Mask Optimization</h2>
-      <p class="mb-3">We introduce a novel training‑free LASS framework based on diffusion models, integrating mask
-        optimization and generative refinement into a unified process composed of reference generation and mask
-        optimization stages.</p>
-      <figure>
-        <img src="dgmo_0522_compressed.png" alt="DGMO framework" class="img-fluid" />
-        <figcaption class="mt-2"><b>Figure&nbsp;1:</b> Framework of DGMO.</figcaption>
-      </figure>
-    </section>
+      </header>
+      <main role="main">
+        <article itemscope itemtype="https://schema.org/BlogPosting">
+          <br></br>
+          <h1 itemprop="headline" align="center">
+            <font style="font-size:50px; color:black;">DGMO: Training-Free Audio Source Separation through Diffusion-Guided Mask Optimization
+            </font>
+          </h1>
+          <br></br>
+          <p style="line-height:1" align="center"><b>
+              <font style="color: #0056b3;">
+                <a href="https://wltschmrz.github.io/">Geonyoung Lee</a><sup>1</sup>,
+                <a href="https://chaksseu.github.io/">Geonhee Han</a><sup>1</sup>,
+                <a href="https://phseo.github.io">Paul Hongsuck Seo</a><sup>1</sup>
+              </font>
+            </b></p>
+          <p style="line-height:0.6" align="center">
+            <font color="061E61"><sup>1</sup>Korea University</font>
+          </p>
 
-    <!--  ▸▸  SEPARATION RESULTS  ◂◂  -->
-    <!--  (The original long table section is kept as‑is to avoid altering previously validated markup)  -->
-    <!--  ✄─────────────────────────────────────────────────────────────────────────────  -->
-    <!--  Existing Separation Results tables start   -->
-    <!--  ✄─────────────────────────────────────────────────────────────────────────────  -->
+          <br>
+          <table align=center width=500px>
+          <center>
+                  <span class="link-block">
+                    <a href="DGMO_arXiv.pdf"
+                       class="external-link button is-normal is-rounded is-dark">
+                      <span class="icon" style="color: black;">
+                          <i class="fa fa-file-text" aria-hidden="true"></i>
+                      </span>
+                      <span style="font-size:22px; color: black; font-family: georgian;"><b>Paper</b></span>
+                    </a>
+            
+    
+                  </span>
+            &nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;
+    
+    
+            &nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;
+                  <!-- Code Link. -->
+                  <span class="link-block">
+                    <a href="https://github.com/wltschmrz/DGMO"
+                       class="external-link button is-normal is-rounded is-dark">
+                      <span class="icon" style="color: black;">
+                          <i class="fab fa-github"></i>
+                      </span>
+                      <span style="font-size:22px; color: black; font-family: georgian;"><b>Code</b></span>
+                      </a>
+                  </span>
+            </center>			  
+             </tr>
+          </table>
+
+          <br>
+          <br>
 
 
+          <section itemprop="entry-text">
+
+            <table class="table" align="center" style="table-layout: fixed;word-break:break-word">
+  
+                  <th>
+                    <h2 id="abstract">
+                      <center>
+                        <h1>Abstract</h1>
+                      </center>
+                    </h2>
+                    <p style="text-align: justify; color:black;font-family: georgian;">
+                      <font> 
+                        Language-Queried Audio Source Separation (LASS) enables open-vocabulary sound separation by conditioning on natural language descriptions. While existing LASS methods rely on task-specific training, we explore whether pretrained diffusion models, originally designed for audio generation, can inherently perform separation without additional training.
+                        In this study, we introduce a training-free framework that leverages generative priors for zero-shot LASS. We examine naïve adaptations of diffusion models to LASS and identify key limitations arising from modality-specific challenges. To address these issues, we propose Diffusion-Guided Mask Optimization (DGMO), a test-time optimization framework that refines spectrogram masks for precise, input-aligned separation.
+                        Our approach demonstrates that pretrained diffusion models can be effectively repurposed for source separation, achieving competitive performance without task-specific supervision. This work expands the application of diffusion models beyond generation, establishing a new paradigm for zero-shot audio separation.
+                      </font>
+                    </p>
+                    </th>
+
+            </table>
+
+            <table class="table" align="center" style="table-layout: fixed;word-break:break-word">
+              <th style="border: None;">
+                <h2 id="graph">
+                  <center>
+                  <h1>Diffusion-Guided Mask Optimization</h1>
+                </center>
+              </h2>
+              <p style="text-align: justify; color:black;font-family: georgian;">
+                <font> 
+                  We introduce a novel training-free LASS framework based on diffusion models, which overcomes the limitations of previous approaches by integrating both mask optimization and generative refinement into a unified process. The proposed framework operates in two stages: reference generation and mask optimization.                <!-- </strong> -->
+                </font>
+              </p>
+              <figure>
+                <p align="center"><img src="dgmo_0522_compressed.png" width="100%" class="center" /></p>
+                <figcaption>
+                  
+                  <p style="text-align: justify;">
+                    <center>
+                    <font color="061E61"><b>Figure 1:</b> Framework of DGMO.
+                    </center>
+                  </p>
+                </figcaption>
+              </figure>
+            </th>
+          </table>
+            
+            
+  
+            
 
             <br></br>
             <h2 id="section_1">
