@@ -37,6 +37,16 @@
     .author-block {
       margin: 0 0.5rem;
     }
+    .logo-bar {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 60px;
+      margin-top: 30px;
+    }
+    .logo-bar img {
+      height: 60px;
+    }
   </style>
 </head>
 
@@ -58,6 +68,11 @@
       <div class="d-flex justify-content-center flex-wrap gap-3 mb-4">
         <a href="DGMO_arXiv.pdf" class="btn btn-dark btn-lg" target="_blank"><i class="fa fa-file-text me-2"></i>Paper</a>
         <a href="https://github.com/wltschmrz/DGMO" class="btn btn-dark btn-lg" target="_blank"><i class="fab fa-github me-2"></i>Code</a>
+      </div>
+      <div class="logo-bar">
+        <a href="https://www.korea.edu/" target="_blank"><img src="logos/ku-logo.png" alt="Korea University"></a>
+        <a href="https://miil.korea.ac.kr/" target="_blank"><img src="logos/miil-logo.png" alt="MIIL"></a>
+        <a href="https://www.interspeech2025.org/" target="_blank"><img src="logos/interspeech-logo.png" alt="Interspeech"></a>
       </div>
     </section>
 
@@ -83,7 +98,7 @@
       <h2>Diffusion-Guided Mask Optimization</h2>
       <p>We introduce a novel training-free LASS framework based on diffusion models, integrating mask optimization and generative refinement into a unified process composed of reference generation and mask optimization stages.</p>
       <figure>
-        <img src="dgmo_0522_compressed.pdf" alt="DGMO framework" class="img-fluid center" style="max-width: 90%;" />
+        <img src="dgmo_0522_compressed.png" alt="DGMO framework" class="img-fluid center" style="max-width: 90%;" />
         <figcaption class="mt-2"><strong>Figure 1:</strong> Framework of DGMO.</figcaption>
       </figure>
     </section>
