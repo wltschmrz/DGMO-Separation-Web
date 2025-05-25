@@ -1,166 +1,245 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8">
-  <meta name="generator" content="Hugo 0.66.0" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DGMO: Training-Free Audio Source Separation through Diffusion-Guided Mask Optimization</title>
+
+  <!-- Bootstrap 5 -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
-  <link rel="shortcut icon" href="favicon.png" type="image/x-icon" />
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
-  <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,600" rel="stylesheet" type="text/css">
-  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/github.min.css">
+
+  <!-- Fonts & Icons -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" crossorigin="anonymous">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,600" rel="stylesheet">
+
+  <!-- Custom CSS -->
   <link rel="stylesheet" href="../css/normalize.css">
   <link rel="stylesheet" href="../css/skeleton.css">
   <link rel="stylesheet" href="../css/custom.css">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
-    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-  <link rel="alternate" href="index.xml" type="application/rss+xml" title="Speech Research">
-  <link rel="shortcut icon" href="favicon.png" type="image/x-icon" />
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" crossorigin="anonymous">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fork-awesome@1.2.0/css/fork-awesome.min.css" integrity="sha256-XoaMnoYC5TH6/+ihMEnospgm0J1PM/nioxbOUdnM8HY=" crossorigin="anonymous">
+
   <style>
-    body { font-size: 20px; }
-    h1{ font-size:30px; color:black; }
-    thead{ border-top: 1px solid #ccc; }
-    .table td{ border: none }
-    .no-border { border: none; }
-    th{ font-weight: lighter; }
-    .table-container { overflow-x: auto; width: 100%; }
-    .table-container2 { table-layout: fixed; word-break: break-word; width: 90%; margin: 0 auto; }
-    .divider { border-top: 2px solid #ccc; margin: 20px 0; }
-    .audio-container { display: flex; justify-content: center; align-items: center; border: none }
-    td, font { text-align: justify; color:black; font-family: georgian; }
-    video { width: 640px; height: 360px; }
-    @media(min-width:1200px){
-      .table-container { overflow-x: auto; width:100%; margin: 0 auto; }
+    body {
+      font-size: 20px;
+      font-family: Georgian, serif;
+      margin: 100px 150px;
+      line-height: 160%;
+      color: black;
     }
+
+    h1 {
+      font-size: 30px;
+    }
+
+    thead {
+      border-top: 1px solid #ccc;
+    }
+
+    .table td, .no-border {
+      border: none;
+    }
+
+    .table-container {
+      overflow-x: auto;
+      width: 100%;
+    }
+
+    .audio-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .table-container2 {
+      table-layout: fixed;
+      word-break: break-word;
+      width: 90%;
+      margin: 0 auto;
+    }
+
+    .divider {
+      border-top: 2px solid #ccc;
+      margin: 20px 0;
+    }
+
+    video {
+      width: 640px;
+      height: 360px;
+    }
+
     @media (max-width: 600px) {
-      body { font-size: 14px; }
-      h1 { font-size: 22px; }
-      h2 { font-size: 18px; }
-      nav ul li { display: block; }
-      .video-container { padding-bottom: 75%; }
-      video { width: 400px; }
+      body {
+        font-size: 14px;
+      }
+
+      h1 {
+        font-size: 22px;
+      }
+
+      h2 {
+        font-size: 18px;
+      }
+
+      video {
+        width: 400px;
+      }
     }
   </style>
-  <title>DGMO: Training-Free Audio Source Separation through Diffusion-Guided Mask Optimization</title>
 </head>
 
-<body rightmargin="150" leftmargin="150" topmargin="100" bottommargin="100" line-height:160%>
+<body>
   <div class="container">
-    <header role="banner"></header>
     <main role="main">
-      <article itemscope itemtype="https://schema.org/BlogPosting">
-        <br>
-        <h1 itemprop="headline" align="center">
-          <font style="font-size:50px; color:black;">DGMO: Training-Free Audio Source Separation through Diffusion-Guided Mask Optimization</font>
-        </h1>
-        <br>
-        <p style="line-height:1" align="center"><b>
-            <font style="color: #0056b3;">
+      <article>
+        <h1 class="text-center" style="font-size: 50px;">DGMO: Training-Free Audio Source Separation through Diffusion-Guided Mask Optimization</h1>
+
+        <p class="text-center">
+          <b>
+            <span style="color: #0056b3;">
               <a href="https://liuxubo717.github.io/">Geonyoung Lee</a><sup>1</sup>,
               <a href="https://~~.github.io/">Geonhee Han</a><sup>1</sup>,
               <a href="https://~~.github.io">Paul Hongsuck Seo</a><sup>1</sup>
-            </font>
-          </b></p>
-        <p style="line-height:0.6" align="center">
-          <font color="061E61"><sup>1</sup>Korea University</font>
+            </span>
+          </b>
         </p>
-        <br>
-        <table align=center width=500px>
-          <center>
-            <span class="link-block">
-              <a href="DGMO_arXiv.pdf" class="external-link button is-normal is-rounded is-dark">
-                <span class="icon" style="color: black;">
-                    <i class="fa fa-file-text" aria-hidden="true"></i>
-                </span>
-                <span style="font-size:22px; color: black; font-family: georgian;"><b>Paper</b></span>
-              </a>
-            </span>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <span class="link-block">
-              <a href="https://github.com/wltschmrz/DGMO" class="external-link button is-normal is-rounded is-dark">
-                <span class="icon" style="color: black;">
-                    <i class="fab fa-github"></i>
-                </span>
-                <span style="font-size:22px; color: black; font-family: georgian;"><b>Code</b></span>
-              </a>
-            </span>
-          </center>
-        </table>
+        <p class="text-center"><span><sup>1</sup>Korea University</span></p>
 
-        <br><br>
+        <div class="text-center my-4">
+          <a href="DGMO_arXiv.pdf" class="btn btn-outline-dark mx-2"><i class="fa fa-file-text"></i> <b>Paper</b></a>
+          <a href="https://github.com/wltschmrz/DGMO" class="btn btn-outline-dark mx-2"><i class="fab fa-github"></i> <b>Code</b></a>
+        </div>
 
-        <section itemprop="entry-text">
-
-          <table class="table" align="center" style="table-layout: fixed;word-break:break-word">
-            <th>
-              <h2 id="abstract"><center><h1>Abstract</h1></center></h2>
-              <p style="text-align: justify; color:black;font-family: georgian;">
-                <font> 
-                  Language-Queried Audio Source Separation (LASS) enables open-vocabulary sound separation by conditioning on natural language descriptions. While existing LASS methods rely on task-specific training, we explore whether pretrained diffusion models, originally designed for audio generation, can inherently perform separation without additional training.
-                  In this study, we introduce a training-free framework that leverages generative priors for zero-shot LASS. We examine naïve adaptations of diffusion models to LASS and identify key limitations arising from modality-specific challenges. To address these issues, we propose Diffusion-Guided Mask Optimization (DGMO), a test-time optimization framework that refines spectrogram masks for precise, input-aligned separation.
-                  Our approach demonstrates that pretrained diffusion models can be effectively repurposed for source separation, achieving competitive performance without task-specific supervision. This work expands the application of diffusion models beyond generation, establishing a new paradigm for zero-shot audio separation.
-                </font>
-              </p>
-            </th>
-          </table>
-
-          <table class="table" align="center" style="table-layout: fixed;word-break:break-word">
-            <th style="border: None;">
-              <h2 id="graph"><center><h1>Diffusion-Guided Mask Optimization</h1></center></h2>
-              <p style="text-align: justify; color:black;font-family: georgian;">
-                <font> 
-                  We introduce a novel training-free LASS framework based on diffusion models, which overcomes the limitations of previous approaches by integrating both mask optimization and generative refinement into a unified process. The proposed framework operates in two stages: reference generation and mask optimization.
-                </font>
-              </p>
-              <figure>
-                <p align="center"><img src="DGMO.png" width="100%" class="center" /></p>
-                <figcaption>
-                  <p style="text-align: justify;"><center>
-                    <font color="061E61"><b>Figure 1:</b> Framework of DGMO.</font>
-                  </center></p>
-                </figcaption>
-              </figure>
-            </th>
-          </table>
-
-          <br><br>
-          <h2 id="section_1"><h1 style="color: black;">Separation Results</h1></h2>
-          <!-- 실제 separation 결과 테이블 삽입부는 생략 가능 -->
-
-          <p style="text-align: justify; color:black;font-family: georgian;">
-            <font>Page updated on 1 March 2025</font>
+        <section>
+          <h2 class="text-center">Abstract</h2>
+          <p>
+            Language-Queried Audio Source Separation (LASS) enables open-vocabulary sound separation by conditioning on natural language descriptions.
+            While existing LASS methods rely on task-specific training, we explore whether pretrained diffusion models can inherently perform separation without additional training.
+            We introduce a training-free framework that leverages generative priors for zero-shot LASS, identifying key limitations and proposing Diffusion-Guided Mask Optimization (DGMO).
+            This test-time optimization framework refines spectrogram masks for precise, input-aligned separation—repurposing diffusion models for zero-shot separation.
           </p>
 
-          <br><br>
+          <h2 class="text-center">Diffusion-Guided Mask Optimization</h2>
+          <p>
+            Our novel training-free LASS framework overcomes limitations of prior methods by integrating mask optimization and generative refinement.
+            It operates in two stages: reference generation and mask optimization.
+          </p>
+          <div class="text-center my-3">
+            <img src="DGMO.png" width="100%" alt="DGMO Framework">
+            <p><b>Figure 1:</b> Framework of DGMO</p>
+          </div>
+
+          <h2 class="mt-5">Separation Results</h2>
+          <div class="table-container">
+            <table class="table table-bordered text-center align-middle">
+              <thead class="table-light">
+                <tr>
+                  <th scope="col" width="15%">Text Query</th>
+                  <th scope="col" width="25%">Mixture</th>
+                  <th scope="col" width="25%">Separated Audio</th>
+                  <th scope="col" width="25%">Ground Truth</th>
+                </tr>
+              </thead>
+              <tbody>
+                <!-- Row 1 -->
+                <tr>
+                  <td>"The dog barking"</td>
+                  <td><img src="demos_plots/exp122_accordion_mixture.png" width="200" height="125" alt="mixture dog"></td>
+                  <td><img src="demos_plots/exp122_accordion_output.png" width="200" height="125" alt="output dog"></td>
+                  <td><img src="demos_plots/exp122_accordion_target.png" width="200" height="125" alt="target dog"></td>
+                </tr>
+                <tr>
+                  <td></td>
+                  <td><audio controls><source src="demos/exp122_accordion_mixture.wav" type="audio/wav"></audio></td>
+                  <td><audio controls><source src="demos/exp122_accordion_output.wav" type="audio/wav"></audio></td>
+                  <td><audio controls><source src="demos/exp122_accordion_target.wav" type="audio/wav"></audio></td>
+                </tr>
+          
+                <!-- Row 2 -->
+                <tr>
+                  <td>"acoustic guitar"</td>
+                  <td><img src="demos_plots/exp1159_acoustic guitar_mixture.png" width="200" height="125" alt="mixture guitar"></td>
+                  <td><img src="demos_plots/exp1159_acoustic guitar_output.png" width="200" height="125" alt="output guitar"></td>
+                  <td><img src="demos_plots/exp1159_acoustic guitar_target.png" width="200" height="125" alt="target guitar"></td>
+                </tr>
+                <tr>
+                  <td></td>
+                  <td><audio controls><source src="demos/exp1159_acoustic guitar_mixture.wav" type="audio/wav"></audio></td>
+                  <td><audio controls><source src="demos/exp1159_acoustic guitar_output.wav" type="audio/wav"></audio></td>
+                  <td><audio controls><source src="demos/exp1159_acoustic guitar_target.wav" type="audio/wav"></audio></td>
+                </tr>
+          
+                <!-- Row 3 -->
+                <tr>
+                  <td>"cello"</td>
+                  <td><img src="demos_plots/exp1758_cello_mixture.png" width="200" height="125" alt="mixture cello"></td>
+                  <td><img src="demos_plots/exp1758_cello_output.png" width="200" height="125" alt="output cello"></td>
+                  <td><img src="demos_plots/exp1758_cello_target.png" width="200" height="125" alt="target cello"></td>
+                </tr>
+                <tr>
+                  <td></td>
+                  <td><audio controls><source src="demos/exp1758_cello_mixture.wav" type="audio/wav"></audio></td>
+                  <td><audio controls><source src="demos/exp1758_cello_output.wav" type="audio/wav"></audio></td>
+                  <td><audio controls><source src="demos/exp1758_cello_target.wav" type="audio/wav"></audio></td>
+                </tr>
+          
+                <!-- Row 4 -->
+                <tr>
+                  <td>"erhu"</td>
+                  <td><img src="demos_plots/exp2066_erhu_mixture.png" width="200" height="125" alt="mixture erhu"></td>
+                  <td><img src="demos_plots/exp2066_erhu_output.png" width="200" height="125" alt="output erhu"></td>
+                  <td><img src="demos_plots/exp2066_erhu_target.png" width="200" height="125" alt="target erhu"></td>
+                </tr>
+                <tr>
+                  <td></td>
+                  <td><audio controls><source src="demos/exp2066_erhu_mixture.wav" type="audio/wav"></audio></td>
+                  <td><audio controls><source src="demos/exp2066_erhu_output.wav" type="audio/wav"></audio></td>
+                  <td><audio controls><source src="demos/exp2066_erhu_target.wav" type="audio/wav"></audio></td>
+                </tr>
+          
+                <!-- 이어지는 row 들도 같은 형식으로 추가하면 됨 -->
+              </tbody>
+            </table>
+          </div>
+          
         </section>
+
+        <p class="mt-4">Page updated on 1 March 2025</p>
       </article>
     </main>
   </div>
 
+  <!-- Scripts -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js"></script>
   <script>hljs.initHighlightingOnLoad();</script>
+
+  <!-- Google Analytics -->
+  <script>
+    (function (i, s, o, g, r, a, m) {
+      i['GoogleAnalyticsObject'] = r;
+      i[r] = i[r] || function () { (i[r].q = i[r].q || []).push(arguments) };
+      i[r].l = 1 * new Date();
+      a = s.createElement(o), m = s.getElementsByTagName(o)[0];
+      a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+    })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+    ga('create', 'UA-139981676-1', 'auto');
+    ga('send', 'pageview');
+  </script>
+
+  <!-- MathJax -->
   <script type="text/x-mathjax-config">
     MathJax.Hub.Config({
-        HTML: ["input/TeX","output/HTML-CSS"],
-        TeX: {
-               Macros: {
-                        bm: ["\\boldsymbol{#1}", 1],
-                        argmax: ["\\mathop{\\rm arg\\,max}\\limits"],
-                        argmin: ["\\mathop{\\rm arg\\,min}\\limits"]},
-               extensions: ["AMSmath.js","AMSsymbols.js"],
-               equationNumbers: { autoNumber: "AMS" } },
-        extensions: ["tex2jax.js"],
-        jax: ["input/TeX","output/HTML-CSS"],
-        tex2jax: { inlineMath: [ ['$','$'], ["\\(","\\)"] ],
-                   displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
-                   processEscapes: true },
-        "HTML-CSS": { availableFonts: ["TeX"],
-                      linebreaks: { automatic: true } }
+      tex2jax: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      },
+      "HTML-CSS": { linebreaks: { automatic: true } }
     });
   </script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
 </body>
+
 </html>
